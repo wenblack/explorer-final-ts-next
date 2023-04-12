@@ -1,10 +1,13 @@
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router';
 import React from "react";
 
 const Home: NextPage = () => {
-
     const [isLoading, setIsLoading] = React.useState(false);
     const inputFileRef = React.useRef<HTMLInputElement | null>(null);
+    const router = useRouter()
+    const id = router.query.id
+
 
     const handleOnClick = async (e: React.MouseEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -21,9 +24,9 @@ const Home: NextPage = () => {
             formData.append('file', file);
         })
 
-        const response = await fetch('/api/upload', {
+        const response = await fetch('/api/upload?id=' + id, {
             method: 'POST',
-            body: formData
+            body: formData,
         });
 
         const body = await response.json() as { status: 'ok' | 'fail', message: string };
@@ -43,7 +46,12 @@ const Home: NextPage = () => {
                 <input type="file" name="myfile" ref={inputFileRef} />
             </div>
             <div>
-                <input type="submit" value="Upload" disabled={isLoading} onClick={handleOnClick} />
+                <input
+                    type="submit"
+                    value="Upload"
+                    disabled={isLoading}
+                    onClick={handleOnClick}
+                />
                 {isLoading && ` Wait, please...`}
             </div>
         </form>

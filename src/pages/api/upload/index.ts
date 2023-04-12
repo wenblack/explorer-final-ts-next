@@ -13,9 +13,9 @@ export const config = {
 type ProcessedFiles = Array<[string, File]>
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-
+  let id = req.query.id
   let status = 200,
-    resultBody = { status: 'ok', message: 'Files were uploaded successfully' }
+    resultBody = { status: 'ok', message: 'Files were uploaded successfully' + id }
 
   /* Get files using formidable */
   const files = await new Promise<ProcessedFiles | undefined>((resolve, reject) => {
@@ -27,7 +27,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     form.on('end', () => resolve(files))
     form.on('error', err => reject(err))
     form.parse(req, () => {
-      //
     })
   }).catch(e => {
     console.log(e)
@@ -38,7 +37,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   })
 
   if (files?.length) {
-
     /* Create directory for uploads */
     const targetPath = path.join(process.cwd(), `/public/uploads/`)
     try {
@@ -50,7 +48,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     /* Move uploaded files to directory */
     for (const file of files) {
       const tempPath = file[1].filepath
-      await fs.rename(tempPath, targetPath + file[1].originalFilename)
+      const ext = path.extname('' + file[1].originalFilename)
+      let nameFormated = id + ext
+      await fs.rename(tempPath, targetPath + `${id}${ext}`)
     }
   }
 
