@@ -1,8 +1,8 @@
-import type { NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from "../../../lib/prisma"
 
 export default async function handler(
-    res: NextApiResponse
+    req: NextApiRequest, res: NextApiResponse
 ) {
     const users = await prisma?.user.findMany({
         select: {
