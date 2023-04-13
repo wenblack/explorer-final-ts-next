@@ -40,7 +40,7 @@
 
 ## 👨🏻‍💻 About the project
 
-- <p style="color: red;">Brief explanation about the project</p>
+- <p style="color: red;">🏁 RocketSeat's Explorer Course Final Project 🏁</p>
 
 To see the **web client**, click here: [PROJECT_NAME Web](https://github/wenblack/explorer-final-ts-next)</br>
 To see the **mobile client**, click here: [PROJECT_NAME Mobile](https://github/wenblack/explorer-final-ts-next)
@@ -66,9 +66,8 @@ Import the `Insomnia.json` on Insomnia App or click on [Run in Insomnia](#insomn
 
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://classic.yarnpkg.com/) or [npm](https://www.npmjs.com/)
-- One instance of [PostgreSQL](https://www.postgresql.org/)
 
-> Obs.: I recommend use docker
+> Obs.: I recommend use Yarn for this Project.
 
 **Clone the project and access the folder**
 
@@ -82,11 +81,14 @@ $ git clone https://github.com/wenblack/explorer-final-ts-next.git && cd explore
 # Install the dependencies
 $ yarn
 
-# Once the services are running, run the migrations
-$ yarn typeorm migration:run
+# Create a .env file with a database location. Use example.env file like reference
+ nano example.env
+
+# Run the migrations and sending seeds
+$ npx prisma migrate dev
 
 # To finish, run the api service
-$ yarn dev:server
+$ yarn dev
 
 # Well done, project is started!
 ```
